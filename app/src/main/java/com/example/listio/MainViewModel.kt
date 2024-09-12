@@ -31,6 +31,7 @@ class MainViewModel @Inject constructor(
         private set
 
     var isCoinDetailsLoaded by mutableStateOf(false)
+    var showProgressIndicator by mutableStateOf(false)
 
     private val _coins = MutableStateFlow(listOf<CoinUIModel>())
     val coins = _coins.asStateFlow()
@@ -66,10 +67,12 @@ class MainViewModel @Inject constructor(
     }
 
     fun getCoinById(coinId: String) {
+        showProgressIndicator = true
         viewModelScope.launch {
             useCases.getCoinByIdUseCase.execute(coinId).apply {
                 body()?.let { dto ->
                     isCoinDetailsLoaded = true
+                    showProgressIndicator = false
                     _selectedCoins.value = dto.toSelectedCoinUIModel()
                 }
             }

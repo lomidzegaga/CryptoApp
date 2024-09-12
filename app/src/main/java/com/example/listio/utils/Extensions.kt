@@ -41,3 +41,7 @@ fun Double.formatPrice(): String {
 fun Boolean.isActiveText(): String {
     return if (this) "Active" else "Inactive"
 }
+
+fun String.solidDescription(): String {
+    return this.ifEmpty { "Information not provided" }
+}
