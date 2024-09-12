@@ -18,7 +18,7 @@ data class ParamsIconItem(
     val mainRowPadding: Padding = Padding.Vertical(),
     val nestedRowPadding: Padding = Padding.Each(start = 20.dp, top = 4.dp, bottom = 4.dp),
     val imageSize: Dp = 60.dp,
-    val imageSource: Int? = null,
+    val imageSource: Any? = null,
     val contentDescription: String? = null,
     val clip: Shape = RoundedCornerShape(10.dp),
     val roundedCornerSize: Dp = 10.dp,

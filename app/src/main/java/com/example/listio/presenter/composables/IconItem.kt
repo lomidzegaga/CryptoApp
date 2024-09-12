@@ -1,6 +1,5 @@
 package com.example.listio.presenter.composables
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,9 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.listio.R
 import com.example.listio.utils.customPadding
 import com.example.listio.utils.params.ParamsIconItem
@@ -29,8 +28,8 @@ fun IconItem(
             .fillMaxWidth()
             .customPadding(params.mainRowPadding)
     ) {
-        Image(
-            painter = painterResource(id = params.imageSource ?: R.drawable.ic_launcher_background),
+        AsyncImage(
+            model = params.imageSource ?: R.drawable.bitcoin,
             contentDescription = params.contentDescription,
             modifier = Modifier
                 .size(params.imageSize)

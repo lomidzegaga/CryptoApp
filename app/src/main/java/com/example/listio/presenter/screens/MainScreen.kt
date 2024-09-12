@@ -1,5 +1,7 @@
 package com.example.listio.presenter.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -15,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -33,6 +36,7 @@ import com.example.listio.R
 import com.example.listio.presenter.composables.CustomButton
 import com.example.listio.presenter.composables.CustomText
 import com.example.listio.presenter.composables.IconItem
+import com.example.listio.utils.CustomColors
 import com.example.listio.utils.MainScreenActions
 import com.example.listio.utils.Padding
 import com.example.listio.utils.clickableWithoutRipple
@@ -122,6 +126,19 @@ fun MainScreen(
             ) {
                 onClick(MainScreenActions.OnBuyClick)
             }
+        }
+
+        AnimatedVisibility(
+            visible = params.isCoinDetailLoaded,
+            enter = fadeIn()
+        ) {
+            LinearProgressIndicator(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 10.dp),
+                color = Color.Black,
+                trackColor = CustomColors.buttonGreenColor
+            )
         }
 
         CustomText(

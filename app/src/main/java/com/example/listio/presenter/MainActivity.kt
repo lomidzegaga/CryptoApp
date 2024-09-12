@@ -1,7 +1,6 @@
 package com.example.listio.presenter
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -40,8 +39,6 @@ class MainActivity : ComponentActivity() {
             val selectedCoin = viewModel.selectedCoin.collectAsState()
             val randomId by remember { mutableIntStateOf((1..1999).random()) }
 
-            Log.d("!!!!!!!", "${selectedCoin.value}")
-
             if (viewModel.showSheet) {
                 BottomSheet(
                     params = ParamsCoinDetails(
@@ -71,6 +68,7 @@ class MainActivity : ComponentActivity() {
                         params = ParamsMainScreen(
                             totalAmountText = "$4 872,83",
                             randomCoin = randomCoin,
+                            isCoinDetailLoaded = viewModel.showProgressIndicator,
                             list = coins.value
                         )
                     ) { action ->
