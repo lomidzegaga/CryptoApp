@@ -1,6 +1,7 @@
 package com.example.listio.presenter.model
 
 data class CoinUIModel(
+    val rank: Int,
     val id: String,
     val name: String,
     val price: String,

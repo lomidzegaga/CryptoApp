@@ -27,6 +27,8 @@ fun BottomSheet(
         CoinDetails(
             params = ParamsCoinDetails(
                 maxSheetHeight = params.maxSheetHeight,
+                price = params.price,
+                percentChangeLast24h = params.percentChangeLast24h,
                 coinDetails = params.coinDetails
             )
         )

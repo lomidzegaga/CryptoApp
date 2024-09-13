@@ -7,14 +7,19 @@ import com.example.listio.domain.use_cases.GetAllCoinsUseCase
 import com.example.listio.domain.use_cases.GetAllTickersUseCases
 import com.example.listio.domain.use_cases.GetCoinByIdUseCase
 import com.example.listio.domain.use_cases.SearchCoinUseCase
-import com.example.listio.utils.BASE_URL
 import com.example.listio.domain.use_cases.UseCases
+import com.example.listio.utils.BASE_URL
+import com.example.listio.utils.DefaultDispatcher
+import com.example.listio.utils.IoDispatcher
+import com.example.listio.utils.MainDispatcher
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -51,4 +56,16 @@ object Module {
         GetCoinByIdUseCase(coinRepositories),
         SearchCoinUseCase(coinRepositories)
     )
+
+    @IoDispatcher
+    @Provides
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
+
+    @DefaultDispatcher
+    @Provides
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
+
+    @MainDispatcher
+    @Provides
+    fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 }

@@ -6,15 +6,14 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.listio.utils.Padding
+import com.example.listio.utils.percentTextColor
 
 data class ParamsIconItem(
     val coinText: String,
     val moneyText: String,
     val percentText: String,
-    val percentTextColor: Color = if (percentText.dropLast(2).toDouble() > 0
-    ) Color.Green else Color.Red,
     val coinChangeText: String,
-    val coinChangeTextColor: Color = Color(0xFF3C3C3C),
+    val coinChangeTextColor: Color = coinChangeText.percentTextColor(),
     val mainRowPadding: Padding = Padding.Vertical(),
     val nestedRowPadding: Padding = Padding.Each(start = 20.dp, top = 4.dp, bottom = 4.dp),
     val imageSize: Dp = 60.dp,

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.listio.utils.customPadding
 import com.example.listio.utils.params.ParamsText
+import com.example.listio.utils.solidDescription
 
 @Composable
 fun CustomText(
@@ -12,7 +13,7 @@ fun CustomText(
     params: ParamsText
 ) {
     Text(
-        text = params.text,
+        text = params.text.solidDescription(),
         color = params.color,
         fontWeight = params.fontWeight,
         fontSize = params.fontSize,

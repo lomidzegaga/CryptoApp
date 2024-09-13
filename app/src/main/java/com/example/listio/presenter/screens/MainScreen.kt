@@ -158,7 +158,7 @@ fun MainScreen(
             LazyColumn(
                 modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(vertical = 20.dp)
             ) {
-                items(params.list) { coin ->
+                items(params.list, key = { it.rank }) { coin ->
                     IconItem(
                         params = ParamsIconItem(
                             coinText = coin.name,
