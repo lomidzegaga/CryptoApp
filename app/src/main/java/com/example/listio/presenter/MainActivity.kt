@@ -37,12 +37,15 @@ class MainActivity : ComponentActivity() {
 
             val coins = viewModel.coins.collectAsState()
             val selectedCoin = viewModel.selectedCoin.collectAsState()
-            val randomId by remember { mutableIntStateOf((1..1999).random()) }
+            val randomId by remember { mutableIntStateOf((1..50).random()) }
 
             if (viewModel.showSheet) {
                 BottomSheet(
                     params = ParamsCoinDetails(
                         maxSheetHeight = screenHeight.dp,
+                        price = coins.value.find { it.rank == selectedCoin.value.rank }?.price
+                            ?: "error",
+                        percentChangeLast24h = coins.value.find { it.rank == selectedCoin.value.rank }?.percentChange24h.toString() + " %",
                         coinDetails = selectedCoin.value
                     )
                 ) {
@@ -90,7 +93,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 Screens.CoinDetails -> {
-                    // BottomSheet(onDismiss = { viewModel.showSheet(false) })
+                    // handle CoinDetails screen
                 }
 
                 Screens.BuyCoins -> {

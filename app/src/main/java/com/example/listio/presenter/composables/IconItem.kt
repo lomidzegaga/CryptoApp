@@ -17,6 +17,7 @@ import com.example.listio.R
 import com.example.listio.utils.customPadding
 import com.example.listio.utils.params.ParamsIconItem
 import com.example.listio.utils.params.ParamsText
+import com.example.listio.utils.percentTextColor
 
 @Composable
 fun IconItem(
@@ -55,7 +56,7 @@ fun IconItem(
                 CustomText(
                     params = ParamsText(
                         text = params.percentText,
-                        color = params.percentTextColor,
+                        color = params.percentText.percentTextColor(),
                         fontSize = TextUnit.Unspecified
                     )
                 )

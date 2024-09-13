@@ -37,7 +37,6 @@ import com.example.listio.utils.isActiveText
 import com.example.listio.utils.params.ParamsCoinDetails
 import com.example.listio.utils.params.ParamsIconItem
 import com.example.listio.utils.params.ParamsText
-import com.example.listio.utils.solidDescription
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLine
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
@@ -55,14 +54,13 @@ import kotlin.random.Random
 
 @Composable
 fun CoinDetails(
-    params: ParamsCoinDetails
+    params: ParamsCoinDetails,
+    dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
     val scrollState = rememberScrollState()
 
     val lineColor = Color(0xFFB0F172)
     val entryCount = 15
-
-    val dispatcher: CoroutineDispatcher = Dispatchers.Default
 
     Column(
         modifier = Modifier
@@ -111,11 +109,9 @@ fun CoinDetails(
             IconItem(
                 params = ParamsIconItem(
                     coinText = params.coinDetails.symbol,
-                    moneyText = "$323.87",
+                    moneyText = params.price,
                     percentText = params.coinDetails.isActive.isActiveText(),
-                    coinChangeText = "+2,62%",
-                    percentTextColor = Color(0xFF3C3C3C),
-                    coinChangeTextColor = Color.Green,
+                    coinChangeText = params.percentChangeLast24h,
                     imageSource = params.coinDetails.logo,
                     mainRowPadding = Padding.Vertical(horizontal = 20.dp, vertical = 20.dp)
                 )
@@ -177,7 +173,7 @@ fun CoinDetails(
             Spacer(modifier = Modifier.width(7.dp))
             CustomText(
                 params = ParamsText(
-                    text = params.coinDetails.description.solidDescription(),
+                    text = params.coinDetails.description,
                     fontSize = TextUnit.Unspecified,
                     fontWeight = FontWeight.Normal,
                 )

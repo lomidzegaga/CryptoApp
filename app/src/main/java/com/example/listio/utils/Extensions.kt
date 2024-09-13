@@ -7,6 +7,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.graphics.Color
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -44,4 +45,10 @@ fun Boolean.isActiveText(): String {
 
 fun String.solidDescription(): String {
     return this.ifEmpty { "Information not provided" }
+}
+
+fun String.percentTextColor(): Color = when {
+    this.endsWith("%") && this.dropLast(2).toDouble() > 0 -> Color.Green
+    this.endsWith("%") && this.dropLast(2).toDouble() < 0 -> Color.Red
+    else -> Color(0xFF3C3C3C)
 }

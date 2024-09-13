@@ -8,17 +8,21 @@ import androidx.lifecycle.viewModelScope
 import com.example.listio.domain.use_cases.UseCases
 import com.example.listio.presenter.model.CoinUIModel
 import com.example.listio.presenter.model.SelectedCoinUIModel
+import com.example.listio.utils.IoDispatcher
 import com.example.listio.utils.Screens
-import com.example.listio.utils.formatPrice
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val useCases: UseCases
+    private val useCases: UseCases,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     var currentScreen by mutableStateOf<Screens>(Screens.OnBoarding)
@@ -39,36 +43,29 @@ class MainViewModel @Inject constructor(
     private val _selectedCoins = MutableStateFlow(SelectedCoinUIModel())
     val selectedCoin = _selectedCoins.asStateFlow()
 
-
     init {
         getAllTickers()
     }
 
-    private fun getAllTickers() {
-        viewModelScope.launch {
+    /**
+    By default, viewModelScope uses the `Dispatchers.Main` dispatcher
+     **/
+    private fun getAllTickers() = viewModelScope.launch {
+        withContext(dispatcher) {
             useCases.getAllTickersUseCases.execute().apply {
                 if (isSuccessful) {
                     isButtonVisible = true
-                    _coins.value = body()?.map { dto ->
-                        CoinUIModel(
-                            id = dto.id,
-                            name = dto.name.take(4),
-                            price = "$" + dto.quotes?.usd?.price?.formatPrice(),
-                            percentChange24h = dto.quotes?.usd?.percentChange24h ?: 0.0,
-                            changeFromAth = dto.quotes?.usd?.percentFromPriceAth.toString() + " " + dto.symbol.take(
-                                4
-                            ),
-                            symbol = dto.symbol
-                        )
-                    } ?: emptyList()
+                    _coins.value = body()?.take(50).let { dto -> dto?.map { it.toCoinUIModel() } }
+                        ?: emptyList()
                 }
             }
         }
     }
 
-    fun getCoinById(coinId: String) {
-        showProgressIndicator = true
-        viewModelScope.launch {
+    fun getCoinById(coinId: String) = viewModelScope.launch {
+        withContext(dispatcher) {
+            showProgressIndicator = true
+
             useCases.getCoinByIdUseCase.execute(coinId).apply {
                 body()?.let { dto ->
                     isCoinDetailsLoaded = true
@@ -87,3 +84,4 @@ class MainViewModel @Inject constructor(
         currentScreen = destination
     }
 }
+
