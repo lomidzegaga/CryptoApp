@@ -1,6 +1,7 @@
 package com.example.listio.utils.params
 
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
@@ -8,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.example.listio.utils.Padding
 import com.example.listio.utils.percentTextColor
 
+@Stable
 data class ParamsIconItem(
     val coinText: String,
     val moneyText: String,

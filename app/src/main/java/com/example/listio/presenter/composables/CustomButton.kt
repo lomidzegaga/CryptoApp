@@ -6,9 +6,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.listio.utils.customPadding
 import com.example.listio.utils.params.ParamsButton
-import com.example.listio.utils.params.ParamsText
 
 @Composable
 fun CustomButton(
@@ -25,13 +25,21 @@ fun CustomButton(
         ), shape = RoundedCornerShape(params.roundedCornerSize)
     ) {
         CustomText(
-            params = ParamsText(
-                text = params.text,
-                color = params.textColor,
-                fontSize = params.textSize,
-                padding = params.textPadding,
-                fontWeight = params.fontWeight
-            )
+            modifier = Modifier.customPadding(params.textPadding),
+            text = params.text,
+            color = params.textColor,
+            fontSize = params.textSize,
+            fontWeight = params.fontWeight
         )
     }
+}
+
+
+@Preview
+@Composable
+fun CustomButtonPreview() {
+    CustomButton(
+        params = ParamsButton("clickable button"),
+        onNavigationClick = { }
+    )
 }

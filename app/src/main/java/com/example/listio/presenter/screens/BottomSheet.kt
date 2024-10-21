@@ -6,31 +6,38 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.listio.presenter.view_models.MainScreenVM
+import com.example.listio.utils.MainScreenActions
 import com.example.listio.utils.params.ParamsCoinDetails
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(
-    params: ParamsCoinDetails,
-    onDismiss: () -> Unit,
+    screenHeight: Dp,
+    viewModel: MainScreenVM = hiltViewModel(),
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
     )
 
     ModalBottomSheet(
-        onDismissRequest = onDismiss,
+        onDismissRequest = { viewModel.onClick(MainScreenActions.ShowBottomSheet(false)) },
         sheetState = modalBottomSheetState,
         dragHandle = { BottomSheetDefaults.DragHandle() },
         containerColor = Color.Black
     ) {
-        CoinDetails(
-            params = ParamsCoinDetails(
-                maxSheetHeight = params.maxSheetHeight,
-                price = params.price,
-                percentChangeLast24h = params.percentChangeLast24h,
-                coinDetails = params.coinDetails
-            )
-        )
+//        viewModel.apply {
+//            CoinDetails(
+//                params = ParamsCoinDetails(
+//                    maxSheetHeight = screenHeight,
+//                    price = coins.value.find { it.rank == selectedCoin.value.rank }?.price
+//                        ?: "error",
+//                    percentChangeLast24h = coins.value.find { it.rank == selectedCoin.value.rank }?.percentChange24h.toString() + " %",
+//                    coinDetails = selectedCoin.value
+//                )
+//            )
+//        }
     }
 }

@@ -1,15 +1,17 @@
 package com.example.listio.data.model
 
-import com.example.listio.presenter.model.CoinUIModel
-import com.example.listio.utils.formatPrice
+import com.example.listio.domain.model.Coin
 import com.squareup.moshi.Json
 
 data class GetAllTickersDto(
-    val id: String, val name: String, val symbol: String, val rank: Int,
-    val quotes: Quotes? = null
+    val id: String,
+    val name: String,
+    val symbol: String,
+    val rank: Int,
+    val quotes: Quotes
 ) {
     data class Quotes(
-        @Json(name = "USD") val usd: Usd?
+        @Json(name = "USD") val usd: Usd
     ) {
         data class Usd(
             val price: Double,
@@ -17,14 +19,14 @@ data class GetAllTickersDto(
             @Json(name = "percent_from_price_ath") val percentFromPriceAth: Double
         )
     }
-
-    fun toCoinUIModel(): CoinUIModel = CoinUIModel(
-        rank = rank,
-        id = id,
-        name = name.take(4),
-        price = "$" + quotes?.usd?.price?.formatPrice(),
-        percentChange24h = quotes?.usd?.percentChange24h ?: 0.0,
-        changeFromAth = quotes?.usd?.percentFromPriceAth.toString() + " " + symbol.take(4),
-        symbol = symbol
-    )
 }
+
+fun GetAllTickersDto.toCoin(): Coin = Coin(
+    id = id,
+    name = name,
+    symbol = symbol,
+    rank = rank,
+    price = quotes.usd.price,
+    percentChange24h = quotes.usd.percentChange24h,
+    changeFromAth = quotes.usd.percentFromPriceAth
+)
