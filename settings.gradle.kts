@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Listio"
 include(":app")
- 
+include(":core")
+include(":navigation")

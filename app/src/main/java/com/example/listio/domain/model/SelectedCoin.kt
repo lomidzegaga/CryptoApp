@@ -1,6 +1,6 @@
-package com.example.listio.presenter.model
+package com.example.listio.domain.model
 
-data class SelectedCoinUIModel(
+data class SelectedCoin(
     val rank: Int = -1,
     val name: String = "",
     val symbol: String = "",

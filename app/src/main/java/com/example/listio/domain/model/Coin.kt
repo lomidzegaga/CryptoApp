@@ -1,11 +1,11 @@
-package com.example.listio.presenter.model
+package com.example.listio.domain.model
 
-data class CoinUIModel(
+data class Coin(
     val rank: Int,
     val id: String,
     val name: String,
-    val price: String,
+    val price: Double,
     val percentChange24h: Double,
-    val changeFromAth: String,
+    val changeFromAth: Double,
     val symbol: String
 )

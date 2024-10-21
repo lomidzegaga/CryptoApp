@@ -5,27 +5,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.example.listio.MainViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.listio.presenter.screens.BottomSheet
-import com.example.listio.presenter.screens.MainScreen
+import com.example.listio.presenter.screens.CoinsListScreen
 import com.example.listio.presenter.screens.OnBoarding
-import com.example.listio.utils.MainScreenActions
+import com.example.listio.presenter.view_models.MainScreenVM
 import com.example.listio.utils.Screens
-import com.example.listio.utils.params.ParamsCoinDetails
-import com.example.listio.utils.params.ParamsMainScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<MainScreenVM>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,62 +27,26 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val screenHeight = LocalConfiguration.current.screenHeightDp * 0.9
-
-            val coins = viewModel.coins.collectAsState()
-            val selectedCoin = viewModel.selectedCoin.collectAsState()
-            val randomId by remember { mutableIntStateOf((1..50).random()) }
+            val state = viewModel.state.collectAsStateWithLifecycle()
 
             if (viewModel.showSheet) {
                 BottomSheet(
-                    params = ParamsCoinDetails(
-                        maxSheetHeight = screenHeight.dp,
-                        price = coins.value.find { it.rank == selectedCoin.value.rank }?.price
-                            ?: "error",
-                        percentChangeLast24h = coins.value.find { it.rank == selectedCoin.value.rank }?.percentChange24h.toString() + " %",
-                        coinDetails = selectedCoin.value
-                    )
-                ) {
-                    viewModel.isCoinDetailsLoaded = false
-                    viewModel.showSheet(false)
-                }
-            }
-
-            if (viewModel.isCoinDetailsLoaded) {
-                viewModel.showSheet(true)
+                    screenHeight = screenHeight.dp,
+                )
             }
 
             when (viewModel.currentScreen) {
                 Screens.OnBoarding -> {
-                    OnBoarding(viewModel.isButtonVisible) {
-                        viewModel.navigateTo(Screens.MainScreen)
-                    }
+                    OnBoarding(
+                        state.value,
+                        onNavigationClick = { viewModel.navigateTo(Screens.MainScreen) }
+                    )
                 }
 
                 Screens.MainScreen -> {
-                    val randomCoin by remember { mutableStateOf(coins.value[randomId]) }
-                    MainScreen(
-                        params = ParamsMainScreen(
-                            totalAmountText = "$4 872,83",
-                            randomCoin = randomCoin,
-                            isCoinDetailLoaded = viewModel.showProgressIndicator,
-                            list = coins.value
-                        )
-                    ) { action ->
-                        when (action) {
-                            MainScreenActions.OnBuyClick -> {
-                                // Handle OnBuyClick action
-                                viewModel.navigateTo(Screens.BuyCoins)
-                            }
-
-                            MainScreenActions.OnNavigationClick -> {
-                                // Handle OnNavigationClick action
-                            }
-
-                            is MainScreenActions.OnCoinDetailsClick -> {
-                                viewModel.getCoinById(coinId = action.coinId)
-                            }
-                        }
-                    }
+                    CoinsListScreen(
+                        state = state.value
+                    )
                 }
 
                 Screens.CoinDetails -> {

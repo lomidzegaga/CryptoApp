@@ -31,12 +31,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.listio.presenter.composables.CustomText
-import com.example.listio.presenter.composables.IconItem
-import com.example.listio.utils.Padding
-import com.example.listio.utils.isActiveText
 import com.example.listio.utils.params.ParamsCoinDetails
-import com.example.listio.utils.params.ParamsIconItem
-import com.example.listio.utils.params.ParamsText
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLine
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
@@ -85,10 +80,8 @@ fun CoinDetails(
             )
 
             CustomText(
-                params = ParamsText(
-                    text = params.coinDetails.symbol,
-                    fontSize = 25.sp
-                )
+                text = params.coinDetails.symbol,
+                fontSize = 25.sp
             )
 
             Icon(
@@ -106,16 +99,16 @@ fun CoinDetails(
                 .padding(10.dp)
                 .background(Color(0xFF161616), shape = RoundedCornerShape(20.dp)),
         ) {
-            IconItem(
-                params = ParamsIconItem(
-                    coinText = params.coinDetails.symbol,
-                    moneyText = params.price,
-                    percentText = params.coinDetails.isActive.isActiveText(),
-                    coinChangeText = params.percentChangeLast24h,
-                    imageSource = params.coinDetails.logo,
-                    mainRowPadding = Padding.Vertical(horizontal = 20.dp, vertical = 20.dp)
-                )
-            )
+//            IconItem(
+//                params = ParamsIconItem(
+//                    coinText = params.coinDetails.symbol,
+//                    moneyText = params.price,
+//                    percentText = params.coinDetails.isActive.isActiveText(),
+//                    coinChangeText = params.percentChangeLast24h,
+//                    imageSource = params.coinDetails.logo,
+//                    mainRowPadding = Padding.Vertical(horizontal = 20.dp, vertical = 20.dp)
+//                )
+//            )
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -139,11 +132,7 @@ fun CoinDetails(
                         lineProvider =
                         LineCartesianLayer.LineProvider.series(
                             rememberLine(remember {
-                                LineCartesianLayer.LineFill.single(
-                                    fill(
-                                        lineColor
-                                    )
-                                )
+                                LineCartesianLayer.LineFill.single(fill(lineColor))
                             })
                         ),
                     ),
@@ -172,11 +161,9 @@ fun CoinDetails(
             )
             Spacer(modifier = Modifier.width(7.dp))
             CustomText(
-                params = ParamsText(
-                    text = params.coinDetails.description,
-                    fontSize = TextUnit.Unspecified,
-                    fontWeight = FontWeight.Normal,
-                )
+                text = params.coinDetails.description,
+                fontSize = TextUnit.Unspecified,
+                fontWeight = FontWeight.Normal
             )
         }
     }

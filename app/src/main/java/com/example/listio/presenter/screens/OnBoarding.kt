@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -22,15 +23,15 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.listio.R
+import com.example.listio.presenter.CoinListState
 import com.example.listio.presenter.composables.CustomButton
 import com.example.listio.presenter.composables.CustomText
 import com.example.listio.utils.Padding
 import com.example.listio.utils.params.ParamsButton
-import com.example.listio.utils.params.ParamsText
 
 @Composable
 fun OnBoarding(
-    isButtonVisible: Boolean,
+    state: CoinListState,
     onNavigationClick: () -> Unit
 ) {
 
@@ -63,15 +64,13 @@ fun OnBoarding(
             verticalArrangement = Arrangement.spacedBy(30.dp)
         ) {
             CustomText(
-                params = ParamsText(
-                    text = "Ready to exchange cryptocurrency \n in just two clicks?",
-                    textAlign = TextAlign.Center,
-                    lineHeight = 26.sp
-                )
+                text = "Ready to exchange cryptocurrency \n in just two clicks?",
+                textAlign = TextAlign.Center,
+                lineHeight = 26.sp
             )
 
             AnimatedVisibility(
-                visible = isButtonVisible,
+                visible = state.isLoading.not(),
                 enter = scaleIn(),
             ) {
                 CustomButton(
