@@ -1,7 +1,8 @@
 package com.example.listio.presenter.model
 
+import com.example.core.presentation.util.DisplayableNumber
 import com.example.listio.domain.model.Coin
-import com.example.listio.utils.toDisplayableNumber
+import com.example.core.presentation.util.toDisplayableNumber
 
 data class CoinUI(
     val rank: Int,
@@ -13,11 +14,6 @@ data class CoinUI(
     val price: DisplayableNumber
 )
 
-
-data class DisplayableNumber(
-    val value: Double,
-    val formatted: String
-)
 
 fun Coin.toCoinUi(): CoinUI = CoinUI(
     id = id,

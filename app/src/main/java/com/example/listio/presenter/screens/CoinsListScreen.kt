@@ -11,9 +11,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import com.example.core.presentation.composables.CustomText
+import com.example.listio.presenter.CoinListAction
 import com.example.listio.presenter.CoinListState
 import com.example.listio.presenter.composables.CoinsList
-import com.example.listio.presenter.composables.CustomText
 import com.example.listio.presenter.composables.SearchFieldComposable
 import com.example.listio.presenter.composables.SuggestCoin
 import com.example.listio.presenter.composables.state
@@ -22,11 +23,12 @@ import com.example.listio.presenter.composables.state
 @Composable
 fun CoinsListScreen(
     state: CoinListState,
-//    onClick: (MainScreenActions) -> Unit
+    onAction: (CoinListAction) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
             .systemBarsPadding()
@@ -41,7 +43,7 @@ fun CoinsListScreen(
         state.suggestCoin?.let { coin ->
             SuggestCoin(
                 coin = coin,
-                onClick = { }
+                onAction = { }
             )
         }
 
@@ -53,10 +55,9 @@ fun CoinsListScreen(
 
         CoinsList(
             state = state,
-            onClick = {
-//                id -> viewModel.onClick(MainScreenActions.OnCoinDetailsClick(coinId = id))
+            onClick = { coin ->
+                onAction(CoinListAction.OnCoinClick(coin))
             }
-
         )
     }
 }
@@ -66,6 +67,7 @@ fun CoinsListScreen(
 @Composable
 fun CoinsListScreenPreview() {
     CoinsListScreen(
-        state = state
+        state = state,
+        onAction = { }
     )
 }

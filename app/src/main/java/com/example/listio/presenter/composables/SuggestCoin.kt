@@ -12,28 +12,41 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.core.presentation.composables.CustomButton
+import com.example.core.presentation.composables.CustomText
+import com.example.core.presentation.util.lightGreen
+import com.example.core.presentation.util.mediumBlack
+import com.example.core.presentation.util.mediumGreen
+import com.example.core.presentation.util.white
+import com.example.listio.presenter.CoinListAction
 import com.example.listio.presenter.model.CoinUI
-import com.example.listio.utils.Padding
-import com.example.listio.utils.params.ParamsButton
 
 @Composable
 fun SuggestCoin(
     modifier: Modifier = Modifier,
     coin: CoinUI,
-    onClick: () -> Unit,
+    onAction: (CoinListAction) -> Unit,
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(10.dp)
+            .shadow(
+                elevation = 15.dp,
+                shape = RectangleShape,
+                ambientColor = mediumGreen,
+                spotColor = mediumGreen
+            ),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF161616)
+            containerColor = mediumBlack
         ),
-        border = BorderStroke(width = 0.1.dp, color = Color.White),
+        border = BorderStroke(width = 0.1.dp, color = white),
         shape = RoundedCornerShape(40f),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 40.dp
@@ -53,7 +66,7 @@ fun SuggestCoin(
                 CustomText(
                     text = "$ ${coin.price.formatted}",
                     fontSize = 25.sp,
-                    color = Color(0xFFACD577),
+                    color = lightGreen,
                 )
 
                 PriceChange(change = coin.percentChange24h)
@@ -62,18 +75,17 @@ fun SuggestCoin(
             CustomText(
                 text = coin.symbol,
                 fontSize = 23.sp,
-                color = Color(0xFFACD577)
+                color = lightGreen
             )
         }
 
         CustomButton(
-            params = ParamsButton(
-                text = "Buy",
-                buttonPadding = Padding.Vertical(vertical = 25.dp, horizontal = 20.dp),
-                textPadding = Padding.All(12.dp)
-            )
+            text = "Buy",
+            modifier = Modifier
+                .padding(vertical = 25.dp, horizontal = 20.dp),
+            modifierForText = Modifier.padding(horizontal = 12.dp)
         ) {
-//            onClick(MainScreenActions.OnBuyClick)
+            onAction(CoinListAction.OnBuyClick(coin))
         }
     }
 }
@@ -82,5 +94,5 @@ fun SuggestCoin(
 @Preview
 @Composable
 fun SuggestCoinPreview() {
-    SuggestCoin(coin = previewCoin, onClick = { })
+    SuggestCoin(coin = previewCoin, onAction = { })
 }

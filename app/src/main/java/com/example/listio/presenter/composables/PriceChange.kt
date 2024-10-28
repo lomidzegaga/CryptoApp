@@ -13,11 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.listio.presenter.model.DisplayableNumber
+import com.example.core.presentation.util.DisplayableNumber
+import com.example.core.presentation.util.mediumBlack
+import com.example.core.presentation.util.mediumGreen
+import com.example.core.presentation.util.red
 
 @Composable
 fun PriceChange(
@@ -32,9 +34,9 @@ fun PriceChange(
     }
 
     val containerColor = if (change.value < 0.0) {
-        Color.Red
+        red
     } else {
-        Color.Green
+        mediumGreen
     }
 
     Row(
@@ -47,7 +49,7 @@ fun PriceChange(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = Color.Black
+            tint = mediumBlack
         )
 
         Text(
