@@ -6,11 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,13 +25,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.listio.presenter.composables.CustomText
-import com.example.listio.utils.params.ParamsCoinDetails
+import com.example.core.presentation.composables.CustomText
+import com.example.core.presentation.util.lightGreen
+import com.example.core.presentation.util.mediumBlack
+import com.example.core.presentation.util.solidDescription
+import com.example.core.presentation.util.white
+import com.example.listio.presenter.CoinListState
+import com.example.listio.presenter.composables.SuggestCoin
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLine
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
@@ -48,74 +52,58 @@ import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
 @Composable
-fun CoinDetails(
-    params: ParamsCoinDetails,
+fun CoinDetailsScreen(
+    state: CoinListState,
     dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
     val scrollState = rememberScrollState()
 
-    val lineColor = Color(0xFFB0F172)
     val entryCount = 15
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(params.maxSheetHeight)
-            .background(Color.Black)
-            .systemBarsPadding()
+            .fillMaxSize()
+            .background(mediumBlack)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp),
+                .padding(10.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = Icons.Default.Clear,
                 contentDescription = null,
-                tint = Color.White,
+                tint = white,
                 modifier = Modifier
                     .size(25.dp)
             )
 
             CustomText(
-                text = params.coinDetails.symbol,
+                text = state.selectedCoin?.symbol ?: "error",
                 fontSize = 25.sp
             )
 
             Icon(
                 imageVector = Icons.Default.AccountCircle,
                 contentDescription = null,
-                tint = Color.White,
+                tint = white,
                 modifier = Modifier
                     .size(25.dp)
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
 
-        Box(
-            modifier = Modifier
-                .padding(10.dp)
-                .background(Color(0xFF161616), shape = RoundedCornerShape(20.dp)),
-        ) {
-//            IconItem(
-//                params = ParamsIconItem(
-//                    coinText = params.coinDetails.symbol,
-//                    moneyText = params.price,
-//                    percentText = params.coinDetails.isActive.isActiveText(),
-//                    coinChangeText = params.percentChangeLast24h,
-//                    imageSource = params.coinDetails.logo,
-//                    mainRowPadding = Padding.Vertical(horizontal = 20.dp, vertical = 20.dp)
-//                )
-//            )
+        state.selectedCoin?.let { coin ->
+            SuggestCoin(coin = coin, onAction = { })
         }
 
         Spacer(modifier = Modifier.height(20.dp))
         Box(
             modifier = Modifier
                 .padding(10.dp)
-                .background(Color(0xFF161616), shape = RoundedCornerShape(20.dp)),
+                .background(mediumBlack, shape = RoundedCornerShape(20.dp)),
         ) {
             val modelProducer = remember { CartesianChartModelProducer() }
             LaunchedEffect(Unit) {
@@ -132,7 +120,7 @@ fun CoinDetails(
                         lineProvider =
                         LineCartesianLayer.LineProvider.series(
                             rememberLine(remember {
-                                LineCartesianLayer.LineFill.single(fill(lineColor))
+                                LineCartesianLayer.LineFill.single(fill(lightGreen))
                             })
                         ),
                     ),
@@ -156,12 +144,12 @@ fun CoinDetails(
             Icon(
                 imageVector = Icons.Default.Info,
                 contentDescription = null,
-                tint = Color.White,
+                tint = white,
                 modifier = Modifier.size(17.dp)
             )
             Spacer(modifier = Modifier.width(7.dp))
             CustomText(
-                text = params.coinDetails.description,
+                text = state.selectedCoin?.name?.solidDescription() ?: "error",
                 fontSize = TextUnit.Unspecified,
                 fontWeight = FontWeight.Normal
             )

@@ -16,12 +16,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.core.presentation.util.boldBlack
+import com.example.core.presentation.util.lightGray
+import com.example.core.presentation.util.mediumGray
+import com.example.core.presentation.util.white
 
 @Composable
 fun SearchFieldComposable(
     searchText: String,
-    onClick: (String) -> Unit
+    onClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     OutlinedTextField(
@@ -29,12 +35,12 @@ fun SearchFieldComposable(
         onValueChange = onClick,
         singleLine = true,
         placeholder = {
-            Text(text = "Search", color = Color(0xFF535353))
+            Text(text = "Search", color = lightGray)
         },
         leadingIcon = {
             Box(modifier = Modifier
                 .clip(RoundedCornerShape(50.dp))
-                .background(Color(0xFF2B2B2B))
+                .background(mediumGray)
                 .clickable { }) {
                 Icon(
                     imageVector = Icons.Default.Search,
@@ -45,14 +51,23 @@ fun SearchFieldComposable(
         },
         shape = RoundedCornerShape(30.dp),
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = Color(0xFF161616),
-            unfocusedContainerColor = Color(0xFF161616),
-            focusedTextColor = Color.White,
+            focusedContainerColor = boldBlack,
+            unfocusedContainerColor = boldBlack,
+            focusedTextColor = white,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(10.dp)
+    )
+}
+
+@Preview
+@Composable
+fun SearchFieldComposablePreview() {
+    SearchFieldComposable(
+        searchText = "",
+        onClick = { }
     )
 }

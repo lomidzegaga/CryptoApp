@@ -11,22 +11,23 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.core.presentation.util.mediumBlack
 import com.example.listio.presenter.CoinListState
+import com.example.listio.presenter.model.CoinUI
 
 @Composable
 fun CoinsList(
     state: CoinListState,
-    onClick: (String) -> Unit
+    onClick: (CoinUI) -> Unit
 ) {
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 13.dp)
-            .background(Color(0xFF161616), shape = RoundedCornerShape(20.dp))
+            .background(mediumBlack, shape = RoundedCornerShape(20.dp))
     ) {
         LazyColumn(
             modifier = Modifier.weight(1f),
@@ -54,5 +55,6 @@ fun CoinListPreview() {
 }
 
 internal val state = CoinListState(
-    coins = listOf(previewCoin, previewCoin, previewCoin)
+    coins = listOf(previewCoin, previewCoin, previewCoin),
+    isLoading = false
 )

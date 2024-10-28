@@ -3,15 +3,11 @@ package com.example.listio.di
 import com.example.listio.data.provider.remote.RemoteDataProvider
 import com.example.listio.data.repositories.CoinRepositoriesImpl
 import com.example.listio.domain.repositories.CoinRepositories
-import com.example.listio.domain.use_cases.GetAllCoinsUseCase
-import com.example.listio.domain.use_cases.GetAllTickersUseCases
-import com.example.listio.domain.use_cases.GetCoinByIdUseCase
-import com.example.listio.domain.use_cases.SearchCoinUseCase
-import com.example.listio.domain.use_cases.UseCases
-import com.example.listio.utils.BASE_URL
-import com.example.listio.utils.DefaultDispatcher
-import com.example.listio.utils.IoDispatcher
-import com.example.listio.utils.MainDispatcher
+import com.example.listio.domain.use_cases.CoinListUseCase
+import com.example.core.data.util.BASE_URL
+import com.example.listio.data.util.DefaultDispatcher
+import com.example.listio.data.util.IoDispatcher
+import com.example.listio.data.util.MainDispatcher
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -20,6 +16,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -30,8 +28,25 @@ object Module {
 
     @Singleton
     @Provides
-    fun provideRetrofitBuilder(): Retrofit =
-        Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(
+    fun provideRetrofitClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val client = OkHttpClient
+            .Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
+
+        return client
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofitBuilder(): Retrofit = Retrofit
+        .Builder()
+        .baseUrl(BASE_URL)
+        .client(provideRetrofitClient())
+        .addConverterFactory(
             MoshiConverterFactory.create(
                 Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
             )
@@ -50,12 +65,8 @@ object Module {
 
     @Singleton
     @Provides
-    fun provideUseCases(coinRepositories: CoinRepositories): UseCases = UseCases(
-        GetAllCoinsUseCase(coinRepositories),
-        GetAllTickersUseCases(coinRepositories),
-        GetCoinByIdUseCase(coinRepositories),
-        SearchCoinUseCase(coinRepositories)
-    )
+    fun provideListUseCase(coinRepositories: CoinRepositories): CoinListUseCase =
+        CoinListUseCase(coinRepositories)
 
     @IoDispatcher
     @Provides

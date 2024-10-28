@@ -54,6 +54,7 @@ android {
 dependencies {
 
     implementation(project(":core"))
+    implementation(project(":navigation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -75,6 +76,8 @@ dependencies {
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
     implementation(libs.moshi.converter)
+    implementation(libs.okhttp.core)
+    implementation(libs.okhttp.logging.interceptor)
 
     // dagger
     implementation(libs.dagger.hilt)
@@ -85,6 +88,9 @@ dependencies {
 
     // hilt viewModel
     implementation(libs.hilt.view.model)
+
+    implementation(libs.appyx.core)
+
 }
 
 kapt {
