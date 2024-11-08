@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenVM @Inject constructor(
-    private val useCases: CoinListUseCase,
+    private val coinListUseCase: CoinListUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
@@ -48,7 +48,31 @@ class MainScreenVM @Inject constructor(
             }
 
             CoinListAction.OnSwipeAction -> {
+                _state.update { it.copy(isRefreshing = true) }
                 loadCoins()
+            }
+
+            is CoinListAction.OnSearch -> {
+                _state.update { it.copy(searchText = action.searchText) }
+                when {
+                    action.searchText.isEmpty() -> {
+                        _state.update { it.copy(isSearchLoading = true) }
+                        loadCoins()
+                    }
+
+                    action.searchText.length > 2 -> {
+                        _state.update {
+                            it.copy(
+                                coins = _state.value.coins.filter { searchedText ->
+                                    searchedText.symbol.contains(
+                                        action.searchText
+                                    )
+                                },
+                                isSearchLoading = false
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -57,10 +81,10 @@ class MainScreenVM @Inject constructor(
     By default, viewModelScope uses the `Dispatchers.Main.immediate` dispatcher
      **/
     fun loadCoins() = viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
-        when (val response = useCases.execute()) {
+        _state.update { it.copy(isLoading = true) }
+        when (val response = coinListUseCase.execute()) {
             is Result.Error -> {
-                _state.update { it.copy(isLoading = false) }
+                _state.update { it.copy(isLoading = false, isRefreshing = false) }
                 _events.send(CoinListEvent.Error(response.error))
             }
 
@@ -68,6 +92,8 @@ class MainScreenVM @Inject constructor(
                 _state.update {
                     it.copy(
                         isLoading = false,
+                        isRefreshing = false,
+                        isSearchLoading = false,
                         coins = response.data.take(50).map { coin -> coin.toCoinUi() },
                         suggestCoin = response.data.random().toCoinUi()
                     )
@@ -76,4 +102,3 @@ class MainScreenVM @Inject constructor(
         }
     }
 }
-

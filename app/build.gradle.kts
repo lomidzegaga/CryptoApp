@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.kapt)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.dagger)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -54,7 +55,6 @@ android {
 dependencies {
 
     implementation(project(":core"))
-    implementation(project(":navigation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -90,6 +90,8 @@ dependencies {
     implementation(libs.hilt.view.model)
 
     implementation(libs.appyx.core)
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 
 }
 

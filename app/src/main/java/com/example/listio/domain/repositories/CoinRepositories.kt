@@ -5,5 +5,6 @@ import retrofit2.Response
 
 fun interface CoinRepositories {
 
-    suspend fun getAllTickers(): Response<List<CoinDto>>
+    suspend fun loadCoins(): Response<List<CoinDto>>
+
 }

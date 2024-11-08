@@ -1,13 +1,13 @@
 package com.example.listio.di
 
+import com.example.core.data.util.BASE_URL
 import com.example.listio.data.provider.remote.RemoteDataProvider
 import com.example.listio.data.repositories.CoinRepositoriesImpl
-import com.example.listio.domain.repositories.CoinRepositories
-import com.example.listio.domain.use_cases.CoinListUseCase
-import com.example.core.data.util.BASE_URL
 import com.example.listio.data.util.DefaultDispatcher
 import com.example.listio.data.util.IoDispatcher
 import com.example.listio.data.util.MainDispatcher
+import com.example.listio.domain.repositories.CoinRepositories
+import com.example.listio.domain.use_cases.CoinListUseCase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

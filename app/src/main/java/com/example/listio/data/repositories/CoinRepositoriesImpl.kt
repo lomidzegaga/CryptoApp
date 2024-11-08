@@ -10,6 +10,6 @@ class CoinRepositoriesImpl @Inject constructor(
     private val remoteDataProvider: RemoteDataProvider
 ) : CoinRepositories {
 
-    override suspend fun getAllTickers(): Response<List<CoinDto>> =
+    override suspend fun loadCoins(): Response<List<CoinDto>> =
         remoteDataProvider.loadCoins()
 }

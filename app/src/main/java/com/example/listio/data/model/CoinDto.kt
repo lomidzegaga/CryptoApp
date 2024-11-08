@@ -1,6 +1,5 @@
 package com.example.listio.data.model
 
-import com.example.listio.domain.model.Coin
 import com.squareup.moshi.Json
 
 data class CoinDto(

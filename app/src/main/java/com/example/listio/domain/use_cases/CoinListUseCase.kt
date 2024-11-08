@@ -14,6 +14,6 @@ class CoinListUseCase @Inject constructor(
 ) {
     suspend fun execute(): Result<List<Coin>, NetworkError> =
         safeCall<List<Coin>> {
-            Response.success(coinRepositories.getAllTickers().body()?.map { it.toCoin() })
+            Response.success(coinRepositories.loadCoins().body()?.map { it.toCoin() })
         }
 }
