@@ -15,7 +15,7 @@ using
 # Table of Content
 
 * [Screenshots](#screenshots)
-* [Used Technologies](#used-technologies-with-dependencies)
+* [Used Technologies with dependencies](#used-technologies-with-dependencies)
 * [Build Instruction](#build-instruction)
 
   <br>
