@@ -17,20 +17,17 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.presentation.composables.CustomButton
 import com.example.core.presentation.composables.CustomText
 import com.example.core.presentation.util.lightGreen
 import com.example.core.presentation.util.mediumBlack
 import com.example.core.presentation.util.mediumGreen
 import com.example.core.presentation.util.white
-import com.example.listio.presenter.CoinListAction
 import com.example.listio.presenter.model.CoinUI
 
 @Composable
 fun SuggestCoin(
     modifier: Modifier = Modifier,
-    coin: CoinUI,
-    onAction: (CoinListAction) -> Unit,
+    coin: CoinUI
 ) {
     Card(
         modifier = modifier
@@ -77,15 +74,6 @@ fun SuggestCoin(
                 color = lightGreen
             )
         }
-
-        CustomButton(
-            text = "Buy",
-            modifier = Modifier
-                .padding(vertical = 25.dp, horizontal = 20.dp),
-            modifierForText = Modifier.padding(horizontal = 12.dp)
-        ) {
-            onAction(CoinListAction.OnBuyClick(coin))
-        }
     }
 }
 
@@ -93,5 +81,5 @@ fun SuggestCoin(
 @Preview
 @Composable
 fun SuggestCoinPreview() {
-    SuggestCoin(coin = previewCoin, onAction = { })
+    SuggestCoin(coin = previewCoin)
 }

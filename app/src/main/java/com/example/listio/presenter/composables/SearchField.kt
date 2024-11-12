@@ -52,7 +52,8 @@ fun SearchFieldComposable(
                     modifier = Modifier.padding(14.dp)
                 )
             }
-        }, trailingIcon = {
+        },
+        trailingIcon = {
             if (isListLoading) {
                 CircularProgressIndicator(
                     trackColor = lightGreen,
@@ -66,6 +67,7 @@ fun SearchFieldComposable(
             focusedContainerColor = boldBlack,
             unfocusedContainerColor = boldBlack,
             focusedTextColor = white,
+            unfocusedTextColor = white,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),

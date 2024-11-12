@@ -26,7 +26,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
@@ -56,6 +56,7 @@ dependencies {
 
     implementation(project(":core"))
 
+    // Core AndroidX libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -63,15 +64,17 @@ dependencies {
     implementation(libs.androidx.material3)
     androidTestImplementation(platform(libs.androidx.compose.bom))
 
+    // Compose UI
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview)
 
+    // Charts and Animations
     implementation(libs.vico.compose)
     implementation(libs.lottie)
 
-    // networking
+    // Networking
     implementation(libs.retrofit)
     implementation(libs.moshi)
     implementation(libs.moshi.kotlin)
@@ -79,18 +82,20 @@ dependencies {
     implementation(libs.okhttp.core)
     implementation(libs.okhttp.logging.interceptor)
 
-    // dagger
+    // Dependency Injection (Dagger Hilt)
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
 
-    //coil
+    // Image Loading (Coil)
     implementation(libs.coil)
 
-    // hilt viewModel
+    // Hilt ViewModel
     implementation(libs.hilt.view.model)
 
-    implementation(libs.appyx.core)
+    // Navigation
     implementation(libs.navigation.compose)
+
+    // JSON and Serialization
     implementation(libs.kotlinx.serialization.json)
 
 }

@@ -1,9 +1,9 @@
 [versions]
 agp = "8.5.2"
-kotlin = "2.0.10"
-coreKtx = "1.13.1"
-lifecycleRuntimeKtx = "2.8.5"
-activityCompose = "1.9.2"
+kotlin = "2.0.21"
+coreKtx = "1.15.0"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.9.3"
 composeBom = "2024.10.01"
 
 vico = "2.0.0-alpha.28"
@@ -22,50 +22,69 @@ espressoCore = "3.6.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 
-appyx = "1.4.0"
 navigationCompose = "2.8.3"
 serialization = "1.7.3"
 
 [libraries]
+# Core AndroidX libraries
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
-vico-compose = { group = "com.patrykandpatrick.vico", name = "compose-m3", version.ref = "vico" }
-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
-okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp-core" }
-okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp-core" }
-moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
-moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
-moshi-converter = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "moshiConverter" }
-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "daggerHilt" }
-dagger-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "daggerHilt" }
-coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
-hilt-view-model = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltViewModel" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-
+# Compose UI
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 
-appyx_core = { module = "com.bumble.appyx:core", version.ref = "appyx" }
+# Navigation
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
+
+# Charts and Animations
+vico-compose = { group = "com.patrykandpatrick.vico", name = "compose-m3", version.ref = "vico" }
+lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+
+# Networking
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp-core" }
+okhttp-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp-core" }
+
+# JSON and Serialization
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+moshi-converter = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "moshiConverter" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+
+# Dependency Injection
+dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "daggerHilt" }
+dagger-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "daggerHilt" }
+hilt-view-model = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltViewModel" }
+
+# Image Loading
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
+# Testing Libraries
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+# UI Components
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
+# Android and Kotlin plugins
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+# Dependency Injection plugin
 dagger = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
+
+# JVM and Serialization
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
-android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

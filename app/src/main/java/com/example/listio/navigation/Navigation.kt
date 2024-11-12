@@ -18,7 +18,7 @@ import com.example.listio.presenter.CoinListEvent
 import com.example.listio.presenter.screens.CoinDetailsScreen
 import com.example.listio.presenter.screens.CoinsListScreen
 import com.example.listio.presenter.screens.OnBoardingScreen
-import com.example.listio.presenter.view_models.MainScreenVM
+import com.example.listio.MainScreenVM
 
 @Composable
 fun Navigation(

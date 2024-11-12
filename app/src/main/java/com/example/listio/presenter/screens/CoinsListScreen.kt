@@ -46,10 +46,7 @@ fun CoinsListScreen(
             )
 
             state.suggestCoin?.let { coin ->
-                SuggestCoin(
-                    coin = coin,
-                    onAction = { }
-                )
+                SuggestCoin(coin = coin)
             }
 
             CustomText(

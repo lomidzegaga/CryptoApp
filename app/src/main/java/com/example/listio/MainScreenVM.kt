@@ -1,17 +1,14 @@
-package com.example.listio.presenter.view_models
+package com.example.listio
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.util.Result
-import com.example.listio.data.util.IoDispatcher
 import com.example.listio.domain.use_cases.CoinListUseCase
 import com.example.listio.presenter.CoinListAction
 import com.example.listio.presenter.CoinListEvent
 import com.example.listio.presenter.CoinListState
 import com.example.listio.presenter.model.toCoinUi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,8 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenVM @Inject constructor(
-    private val coinListUseCase: CoinListUseCase,
-    @IoDispatcher private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val coinListUseCase: CoinListUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(CoinListState())
@@ -41,8 +37,6 @@ class MainScreenVM @Inject constructor(
 
     fun onAction(action: CoinListAction) {
         when (action) {
-            is CoinListAction.OnBuyClick -> Unit
-
             is CoinListAction.OnCoinClick -> {
                 _state.update { it.copy(selectedCoin = action.coinUi) }
             }
@@ -60,7 +54,7 @@ class MainScreenVM @Inject constructor(
                         loadCoins()
                     }
 
-                    action.searchText.length > 2 -> {
+                    action.searchText.trim().length > 2 -> {
                         _state.update {
                             it.copy(
                                 coins = _state.value.coins.filter { searchedText ->

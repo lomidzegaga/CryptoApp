@@ -14,3 +14,5 @@ val lightGray = Color(0xFF535353)
 val mediumGray = Color(0xFF2B2B2B)
 
 val white = Color(0xFFFFFFFF)
+
+val transparent = Color(0x00000000)

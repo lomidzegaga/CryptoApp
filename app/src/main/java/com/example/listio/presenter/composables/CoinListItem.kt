@@ -37,7 +37,7 @@ fun CoinListItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp)
+            .padding(13.dp)
             .clickableWithoutRipple { onClick(coin) }
     ) {
         Image(
