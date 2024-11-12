@@ -10,15 +10,25 @@ layer is using
 using
 [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation).
 
+<br>
+
 # Table of Content
 
 * [Screenshots](#screenshots)
 * [Used Technologies](#used-technologies-with-dependencies)
 * [Build Instruction](#build-instruction)
 
+  <br>
+
 ## screenshots
 
 Here are some screenshots of the application:
+
+|<img src="https://github.com/user-attachments/assets/7da4e387-8a90-4df2-8e83-42b5104987d4" width="200" />|<img src="https://github.com/user-attachments/assets/d3c8b2c1-eb05-451e-a33b-0859b028bbcf" width="200" />|<img src="https://github.com/user-attachments/assets/db86b855-5b0e-4cca-b9ee-6c685e228b71" width="200" />|
+|-|-|-|
+|<img src="https://github.com/user-attachments/assets/990ca0bc-79b9-4ca5-968c-13828acabb2b" width="200" />|<img src="https://github.com/user-attachments/assets/28262dd6-8e10-49f3-91f6-c08709d302cd" width="200" />|<img src="https://github.com/user-attachments/assets/b7417400-02b2-4641-bef5-bbfe4f72c0f1" width="200" />|
+
+<br>
 
 ## used technologies with dependencies
 
@@ -84,6 +94,8 @@ dependency("androidx.hilt:hilt-navigation-compose:1.2.0")
 ```kotlin
 dependency("io.coil-kt:coil-compose:2.7.0")
 ```
+
+<br>
 
 ## Build Instruction
 Just clone the project and open it in Android Studio.
