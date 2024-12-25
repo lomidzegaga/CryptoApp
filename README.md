@@ -1,3 +1,10 @@
+
+<div align="center">
+  <a href="https://www.linkedin.com/in/gaga-lomidze/" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
+  </a>
+</div>
+
 # Crypto Currency Android
 
 Welcome to Crypto Currency App - an app created to keep you informed about the constantly evolving
